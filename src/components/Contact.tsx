@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Link, GitBranch, Send } from "lucide-react";
+import { Mail, Link, GitBranch, Send, Download } from "lucide-react";
 import { useState } from "react";
 
 export default function Contact() {
@@ -77,13 +77,25 @@ export default function Contact() {
                 </div>
               </a>
 
-              <a href="https://github.com/Koushik-5499" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-white/5 hover:border-purple/30 hover:bg-white/5 transition-all group">
-                <div className="w-14 h-14 rounded-xl bg-purple/10 border border-purple/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <a href="https://github.com/Koushik-5499" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-white/5 hover:border-purple-500/30 hover:bg-white/5 transition-all group">
+                <div className="w-14 h-14 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                   <GitBranch className="text-purple-400" />
                 </div>
                 <div>
                   <h4 className="text-white font-heading font-semibold mb-1 text-lg">GitHub</h4>
                   <p className="text-gray-400 group-hover:text-purple-400 transition-colors">Koushik-5499</p>
+                </div>
+              </a>
+
+              {/* Download Resume Button */}
+              <a href="/assets/resume.pdf" download="Koushik_S_Resume.pdf" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-cyan/20 hover:border-cyan/50 hover:bg-cyan/5 hover:shadow-[0_0_30px_rgba(0,180,255,0.2)] transition-all group mt-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-14 h-14 rounded-xl bg-cyan/20 border border-cyan/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:-translate-y-1 transition-transform relative z-10">
+                  <Download className="text-cyan" />
+                </div>
+                <div className="relative z-10">
+                  <h4 className="text-white font-heading font-bold mb-1 text-lg">Download Resume</h4>
+                  <p className="text-gray-300 group-hover:text-white transition-colors">Grab a copy of my latest CV</p>
                 </div>
               </a>
             </div>
