@@ -1,117 +1,113 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+
+const navLinks = [
+  { name: "Home", href: "#hero" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Achievements", href: "#achievements" },
+  { name: "Contact", href: "#contact" },
+];
 
 export default function Navigation() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 50);
     };
-    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled ? "py-4 bg-[#03050a]/90 backdrop-blur-md border-b border-white/5 shadow-2xl" : "py-8 bg-transparent"
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? "glass-card border-b border-white/10" : "bg-transparent"
         }`}
       >
-        <div className="container mx-auto px-8 md:px-16 flex items-center justify-between">
-          
-          {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-10">
-            <a href="#about" className="text-xs font-bold tracking-[0.2em] text-white/70 hover:text-white uppercase transition-colors relative group">
-              About
-              <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            <a href="#projects" className="text-xs font-bold tracking-[0.2em] text-white/70 hover:text-white uppercase transition-colors relative group">
-              Projects
-              <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            <a href="#contact" className="text-xs font-bold tracking-[0.2em] text-white/70 hover:text-white uppercase transition-colors relative group">
-              Contact
-              <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          </nav>
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            
+            {/* Logo - Hidden */}
+            <div className="w-0 md:w-auto opacity-0"></div>
 
-          {/* Empty div for mobile spacing */}
-          <div className="md:hidden font-heading text-lg font-bold tracking-widest text-white">
-            KS
-          </div>
-
-          {/* Email Me Button (Desktop) */}
-          <div className="hidden md:block">
-            <a
-              href="mailto:koushik4680@gmail.com"
-              className="px-8 py-3 rounded-full border border-white/30 text-white text-xs font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300"
-            >
-              Email Me
-            </a>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 z-50 p-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <span className={`w-6 h-0.5 bg-white transition-all ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}></span>
-            <span className={`w-6 h-0.5 bg-white transition-all ${mobileMenuOpen ? "opacity-0" : ""}`}></span>
-            <span className={`w-6 h-0.5 bg-white transition-all ${mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}></span>
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Nav */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 bg-[#03050a]/95 z-40 flex flex-col items-center justify-center"
-          >
-            <ul className="flex flex-col items-center gap-10">
-              {["About", "Projects", "Contact"].map((item, idx) => (
-                <motion.li 
-                  key={item}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              {navLinks.map((link, idx) => (
+                <Link
+                  key={idx}
+                  href={link.href}
+                  className="text-sm font-semibold text-gray-300 hover:text-cyan transition-colors relative group"
                 >
-                  <a
-                    href={`#${item.toLowerCase()}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-2xl font-bold tracking-[0.2em] text-white uppercase hover:text-cyan transition-colors"
-                  >
-                    {item}
-                  </a>
-                </motion.li>
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan to-purple-500 group-hover:w-full transition-all duration-300" />
+                </Link>
               ))}
-              <motion.li
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="mt-8"
+            </div>
+
+            {/* CTA Button */}
+            <div className="hidden md:block">
+              <Link
+                href="#contact"
+                className="px-6 py-2 bg-gradient-to-r from-cyan to-blue-500 rounded-full font-semibold text-white text-sm hover:shadow-[0_0_20px_rgba(0,212,255,0.5)] transition-all duration-300"
               >
-                <a
-                  href="mailto:koushik4680@gmail.com"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-8 py-4 rounded-full border border-white text-white text-sm font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all"
-                >
-                  Email Me
-                </a>
-              </motion.li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                Hire Me
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden w-10 h-10 flex items-center justify-center glass-card rounded-lg"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, x: "100%" }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: "100%" }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-40 md:hidden"
+        >
+          <div className="absolute inset-0 bg-[#0a0a0f]/95 backdrop-blur-xl" />
+          <div className="relative h-full flex flex-col items-center justify-center gap-8">
+            {navLinks.map((link, idx) => (
+              <Link
+                key={idx}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-2xl font-bold font-heading text-white hover:text-cyan transition-colors"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link
+              href="#contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-8 py-3 bg-gradient-to-r from-cyan to-blue-500 rounded-full font-semibold text-white text-lg"
+            >
+              Hire Me
+            </Link>
+          </div>
+        </motion.div>
+      )}
     </>
   );
 }

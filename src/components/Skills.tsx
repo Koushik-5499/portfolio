@@ -1,126 +1,156 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Globe2, Cpu } from "lucide-react";
-import React, { useRef } from "react";
+import { Code2, Database, Cpu, Sparkles, Wrench } from "lucide-react";
 
-const skillsData = [
+const skillCategories = [
+  {
+    title: "Frontend",
+    icon: Code2,
+    gradient: "from-cyan to-blue-500",
+    skills: [
+      { name: "HTML", level: 95 },
+      { name: "CSS", level: 90 },
+      { name: "JavaScript", level: 90 },
+      { name: "React", level: 85 },
+      { name: "Next.js", level: 85 },
+    ],
+  },
+  {
+    title: "Backend",
+    icon: Database,
+    gradient: "from-blue-500 to-purple-500",
+    skills: [
+      { name: "Firebase", level: 90 },
+      { name: "Node.js", level: 80 },
+    ],
+  },
   {
     title: "Programming",
-    icon: <Code2 size={24} className="text-cyan" />,
-    skills: ["C", "Java", "Python", "JavaScript"],
-    gradient: "from-cyan/20 to-primary/10",
-    borderHover: "hover:border-cyan/40"
+    icon: Cpu,
+    gradient: "from-purple-500 to-pink-500",
+    skills: [
+      { name: "Java", level: 85 },
+      { name: "Python", level: 80 },
+      { name: "C", level: 75 },
+    ],
   },
   {
-    title: "Web & Development",
-    icon: <Globe2 size={24} className="text-purple" />,
-    skills: ["HTML", "CSS", "Firebase", "GitHub", "Vercel"],
-    gradient: "from-purple/20 to-indigo/10",
-    borderHover: "hover:border-purple/40"
+    title: "AI & ML",
+    icon: Sparkles,
+    gradient: "from-pink-500 to-cyan",
+    skills: [
+      { name: "Prompt Engineering", level: 95 },
+      { name: "Generative AI", level: 90 },
+      { name: "AI Agents", level: 85 },
+    ],
   },
   {
-    title: "AI & Tools",
-    icon: <Cpu size={24} className="text-pink-400" />,
-    skills: ["Prompt Engineering", "Generative AI", "AI Chatbot Integration", "Power BI", "Razorpay", "Resend", "Google Workspace"],
-    gradient: "from-pink-500/20 to-purple/10",
-    borderHover: "hover:border-pink-500/40"
-  }
+    title: "Tools",
+    icon: Wrench,
+    gradient: "from-cyan to-purple-500",
+    skills: [
+      { name: "GitHub", level: 90 },
+      { name: "Vercel", level: 85 },
+      { name: "Firebase", level: 90 },
+      { name: "Power BI", level: 75 },
+    ],
+  },
 ];
-
-const TiltCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -5;
-    const rotateY = ((x - centerX) / centerX) * 5;
-
-    ref.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-  };
-
-  const handleMouseLeave = () => {
-    if (!ref.current) return;
-    ref.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
-  };
-
-  return (
-    <div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`transition-all duration-300 ease-out ${className}`}
-      style={{ transformStyle: "preserve-3d" }}
-    >
-      {children}
-    </div>
-  );
-};
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-32 relative border-t border-white/5 bg-[#03050a]/50">
+    <section id="skills" className="py-32 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent" />
+      
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         
-        <motion.div 
+        {/* Section Header */}
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple/10 text-purple-400 font-mono text-sm mb-4 uppercase tracking-widest border border-purple/20">
-            Skills & Expertise
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6">
+            <Cpu className="w-4 h-4 text-cyan" />
+            <span className="text-sm font-mono text-cyan uppercase tracking-widest">Tech Arsenal</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Technology Arsenal</h2>
+          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+            <span className="gradient-text">Skills & Technologies</span>
+          </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            A diverse toolkit spanning programming, web development, and AI technologies.
+            A comprehensive toolkit for building next-generation solutions
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillsData.map((category, idx) => (
+        {/* Skills Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {skillCategories.map((category, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="glass-card p-8 rounded-2xl hover:border-cyan/30 transition-all duration-300 group relative overflow-hidden"
             >
-              <TiltCard className="h-full">
-                <div className={`glass-card rounded-3xl p-8 h-full border border-white/5 ${category.borderHover} group relative overflow-hidden`}>
-                  {/* Hover gradient glow */}
-                  <div className={`absolute -inset-10 bg-gradient-to-br ${category.gradient} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}></div>
-                  
-                  <div className="relative z-10">
-                    <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 border border-white/10 group-hover:scale-110 transition-transform">
-                      {category.icon}
-                    </div>
-                    
-                    <h3 className="text-2xl font-heading font-bold text-white mb-6">{category.title}</h3>
-                    
-                    <div className="flex flex-wrap gap-3">
-                      {category.skills.map((skill, i) => (
-                        <span 
-                          key={i} 
-                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white hover:border-white/20 transition-all flex items-center gap-2 cursor-default shadow-sm"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-70"></span>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
+              {/* Glow Effect */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              {/* Header */}
+              <div className="flex items-center gap-4 mb-8 relative z-10">
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${category.gradient} p-0.5`}>
+                  <div className="w-full h-full bg-[#0a0a0f] rounded-xl flex items-center justify-center">
+                    <category.icon className="w-7 h-7 text-white" />
                   </div>
                 </div>
-              </TiltCard>
+                <h3 className="text-2xl font-bold font-heading">{category.title}</h3>
+              </div>
+
+              {/* Skills List */}
+              <div className="space-y-6 relative z-10">
+                {category.skills.map((skill, skillIdx) => (
+                  <div key={skillIdx}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-white">{skill.name}</span>
+                      <span className="text-xs font-mono text-gray-400">{skill.level}%</span>
+                    </div>
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: idx * 0.1 + skillIdx * 0.1 }}
+                        className={`h-full bg-gradient-to-r ${category.gradient} rounded-full relative`}
+                      >
+                        <div className="absolute inset-0 bg-white/20 animate-shimmer" />
+                      </motion.div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Decorative Corner */}
+              <div className={`absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-br ${category.gradient} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity duration-500`} />
             </motion.div>
           ))}
         </div>
+
+        {/* Additional Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-400 text-lg">
+            Constantly learning and adapting to emerging technologies
+          </p>
+        </motion.div>
 
       </div>
     </section>

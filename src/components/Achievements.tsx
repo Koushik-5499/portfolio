@@ -1,114 +1,155 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Trophy, Medal, Award, FileBadge } from "lucide-react";
+import { Award, Trophy, Rocket, Zap, Code, Brain } from "lucide-react";
+import CountUp from "react-countup";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+
+const metrics = [
+  { icon: Award, label: "Certifications", value: 15, suffix: "+", color: "from-cyan to-blue-500" },
+  { icon: Trophy, label: "Hackathons", value: 3, suffix: "+", color: "from-purple-500 to-pink-500" },
+  { icon: Rocket, label: "Major Projects", value: 3, suffix: "+", color: "from-blue-500 to-cyan" },
+  { icon: Zap, label: "AI Integrations", value: 5, suffix: "+", color: "from-pink-500 to-purple-500" },
+  { icon: Code, label: "Technologies", value: 15, suffix: "+", color: "from-cyan to-purple-500" },
+  { icon: Brain, label: "Live Deployments", value: 3, suffix: "+", color: "from-purple-500 to-cyan" },
+];
 
 const achievements = [
   {
-    title: "PromptWars",
-    subtitle: "Google Antigravity AI Challenge",
-    year: "2026",
-    icon: <Trophy className="text-yellow-400" size={32} />
+    title: "PromptWars Challenge",
+    description: "Built AI Election Assistant using advanced prompt engineering",
+    year: "2024",
+    category: "Generative AI",
   },
   {
     title: "AB PM-JAY Hackathon",
-    subtitle: "Auto-Adjudication Healthcare",
-    year: "2026",
-    icon: <Medal className="text-blue-400" size={32} />
+    description: "Developed healthcare solution for government initiative",
+    year: "2024",
+    category: "Healthcare Tech",
   },
   {
     title: "AMD Developer Hackathon",
-    subtitle: "Advanced Innovation Challenge",
-    year: "2026",
-    icon: <Award className="text-cyan-400" size={32} />
-  }
-];
-
-const certifications = [
-  { title: "Google AI Essentials", desc: "Foundations of AI & Machine Learning" },
-  { title: "Prompt Engineering", desc: "Advanced Prompt Design & Optimization" },
-  { title: "Full Stack Development", desc: "HTML, CSS, JavaScript & Firebase" },
-  { title: "Python for Data Science", desc: "Data Analysis & Visualization" },
-  { title: "Power BI Analytics", desc: "Business Intelligence & Dashboards" },
+    description: "Created innovative solution leveraging AMD technologies",
+    year: "2024",
+    category: "Hardware Innovation",
+  },
 ];
 
 export default function Achievements() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section id="achievements" className="py-32 relative border-t border-white/5 bg-[#03050a]/50 overflow-hidden">
-      <div className="container mx-auto px-6 max-w-7xl relative z-10 mb-24">
+    <section id="achievements" className="py-32 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent" />
+      
+      <div className="container mx-auto px-6 max-w-7xl relative z-10" ref={ref}>
         
-        <motion.div 
+        {/* Section Header */}
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 text-yellow-400 font-mono text-sm mb-4 uppercase tracking-widest border border-yellow-400/20">
-            Recognition
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6">
+            <Trophy className="w-4 h-4 text-cyan" />
+            <span className="text-sm font-mono text-cyan uppercase tracking-widest">Achievement Dashboard</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Achievements & Hackathons</h2>
+          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+            <span className="gradient-text">Impact & Recognition</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            Metrics that showcase dedication, innovation, and real-world impact
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {achievements.map((item, idx) => (
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-20">
+          {metrics.map((metric, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="glass-card p-6 rounded-2xl text-center hover:scale-105 transition-transform duration-300 group relative overflow-hidden"
+            >
+              {/* Glow Effect */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+              
+              <div className={`w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br ${metric.color} p-0.5`}>
+                <div className="w-full h-full bg-[#0a0a0f] rounded-xl flex items-center justify-center">
+                  <metric.icon className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              
+              <div className="text-3xl font-bold font-heading mb-2">
+                {isInView && (
+                  <CountUp
+                    end={metric.value}
+                    duration={2.5}
+                    suffix={metric.suffix}
+                    className={`bg-gradient-to-r ${metric.color} text-transparent bg-clip-text`}
+                  />
+                )}
+              </div>
+              
+              <p className="text-sm text-gray-400 font-medium">{metric.label}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Achievements Timeline */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="mb-12"
+        >
+          <h3 className="text-3xl font-bold font-heading text-center mb-12">
+            Hackathons & <span className="gradient-text">Recognition</span>
+          </h3>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {achievements.map((achievement, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              className="glass-card p-8 rounded-3xl border border-white/5 hover:border-yellow-400/30 transition-all duration-500 text-center group relative overflow-hidden"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="glass-card p-8 rounded-2xl hover:border-cyan/30 transition-all duration-300 group relative overflow-hidden"
             >
-              {/* Rotating glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent,rgba(250,204,21,0.05),transparent,rgba(0,180,255,0.05),transparent)] animate-[spin_10s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
-              <div className="relative z-10">
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-white/5 to-white/10 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-heading font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-400 mb-6">{item.subtitle}</p>
-                <span className="inline-block px-4 py-1.5 rounded-full bg-yellow-400/10 text-yellow-400 text-xs font-bold border border-yellow-400/20 shadow-[0_0_10px_rgba(250,204,21,0.2)]">
-                  {item.year}
-                </span>
+              {/* Year Badge */}
+              <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-cyan/10 border border-cyan/20 text-cyan text-xs font-mono">
+                {achievement.year}
               </div>
+              
+              {/* Category */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-4">
+                {achievement.category}
+              </div>
+              
+              <h4 className="text-xl font-bold font-heading text-white mb-3 group-hover:text-cyan transition-colors">
+                {achievement.title}
+              </h4>
+              
+              <p className="text-gray-400 leading-relaxed">
+                {achievement.description}
+              </p>
+              
+              {/* Decorative Line */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </motion.div>
           ))}
         </div>
-      </div>
 
-      {/* Certifications Marquee */}
-      <div className="relative border-y border-white/5 bg-black/20 py-16">
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#03050a] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#03050a] to-transparent z-10 pointer-events-none"></div>
-        
-        <div className="text-center mb-10">
-          <h3 className="text-2xl font-heading font-bold text-white">Certifications</h3>
-        </div>
-
-        <div className="flex overflow-hidden">
-          <motion.div 
-            className="flex gap-6 whitespace-nowrap px-6"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
-            style={{ width: "max-content" }}
-            whileHover={{ animationPlayState: "paused" }} // Wait, framer motion whileHover doesn't pause x animation easily like this. We will use CSS for marquee instead.
-          >
-            {/* We double the array for seamless infinite scroll */}
-            {[...certifications, ...certifications].map((cert, idx) => (
-              <div key={idx} className="glass-card flex-shrink-0 w-80 p-6 rounded-2xl border border-white/5 hover:border-cyan/30 transition-colors group cursor-pointer flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan/10 to-primary/10 border border-cyan/20 flex items-center justify-center flex-shrink-0">
-                  <FileBadge className="text-cyan group-hover:scale-110 transition-transform" size={24} />
-                </div>
-                <div className="whitespace-normal">
-                  <h4 className="text-white font-heading font-bold mb-1">{cert.title}</h4>
-                  <p className="text-sm text-gray-400">{cert.desc}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
       </div>
     </section>
   );

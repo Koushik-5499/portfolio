@@ -1,205 +1,217 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
+import { TypeAnimation } from "react-type-animation";
+import { ArrowDown, Download, Mail, Volume2, VolumeX } from "lucide-react";
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 export default function Hero() {
-  const [isMuted, setIsMuted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLElement>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
 
-  const setupVolumeBoost = () => {
-    try {
-      if (!audioCtxRef.current && videoRef.current) {
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioContextClass) {
-          const ctx = new AudioContextClass();
-          audioCtxRef.current = ctx;
-          
-          const track = ctx.createMediaElementSource(videoRef.current);
-          const gainNode = ctx.createGain();
-          
-          // Boost volume to 400%
-          gainNode.gain.value = 4.0;
-          
-          track.connect(gainNode);
-          gainNode.connect(ctx.destination);
-        }
-      }
-      if (audioCtxRef.current?.state === "suspended") {
-        audioCtxRef.current.resume();
-      }
-    } catch (error) {
-      console.error("Audio boost failed:", error);
-    }
-  };
-
-  const attemptPlay = async () => {
-    if (!videoRef.current) return;
-    
-    try {
-      // Try to autoplay WITH sound first
-      videoRef.current.muted = false;
-      await videoRef.current.play();
-      setIsMuted(false);
-      setIsPlaying(true);
-      setupVolumeBoost();
-    } catch (error) {
-      // Browser blocked unmuted autoplay.
-      // The video will remain paused on the first frame because the user requested NO MUTING on load.
-      setIsPlaying(false);
-      setIsMuted(false);
-
-      // Add a global click listener: the moment the user clicks ANYWHERE on the page,
-      // it will unmute, boost volume, and restart the video.
-      const handleGlobalClick = async () => {
-        if (!videoRef.current) return;
-        videoRef.current.muted = false;
-        setIsMuted(false);
-        videoRef.current.currentTime = 0; // restart from beginning
-        
-        setupVolumeBoost();
-        await videoRef.current.play().catch(() => {});
-        
-        // Remove listener after first interaction
-        document.removeEventListener('click', handleGlobalClick);
-        document.removeEventListener('touchstart', handleGlobalClick);
-      };
-      
-      document.addEventListener('click', handleGlobalClick);
-      document.addEventListener('touchstart', handleGlobalClick);
-    }
-  };
-
-  // Initial Autoplay Attempt
   useEffect(() => {
-    attemptPlay();
-  }, []);
-
-  // Restart video when scrolled into view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!videoRef.current) return;
-
-          if (entry.isIntersecting) {
-            // User scrolled back to the hero section, restart from beginning
-            videoRef.current.currentTime = 0;
-            // Only try to play if it was already playing before, or try playing anyway
-            videoRef.current.play().catch(() => {});
-          } else {
-            // Paused when out of view
-            videoRef.current.pause();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay failed, video will start on user interaction
+      });
     }
-
-    return () => {
-      if (containerRef.current) observer.unobserve(containerRef.current);
-    };
   }, []);
 
   const toggleMute = () => {
     if (videoRef.current) {
-      const isNowMuted = !videoRef.current.muted;
-      videoRef.current.muted = isNowMuted;
-      setIsMuted(isNowMuted);
-
-      if (!isNowMuted) {
-        setupVolumeBoost();
-      }
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
     }
   };
 
   return (
-    <section ref={containerRef} id="hero" className="relative h-screen w-full overflow-hidden">
-      
-      {/* Fullscreen Video Background */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#050505]">
+    <section id="hero" className="relative min-h-screen w-full overflow-hidden flex items-center">
+      {/* Video Background - Full Screen with Crop */}
+      <div className="absolute inset-0 z-0">
         <video
           ref={videoRef}
-          playsInline
           autoPlay
+          loop
           muted={isMuted}
-          loop={false}
-          className="w-full h-full object-cover object-center scale-[1.25] md:scale-[1.35] translate-y-10 md:translate-y-16"
-          onEnded={() => setIsPlaying(false)}
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover scale-110"
+          style={{ objectPosition: 'center 40%' }}
         >
           <source src="/assets/presenter.mp4" type="video/mp4" />
         </video>
-      </div>
-
-      {/* Cinematic Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#03050a]/95 via-[#03050a]/40 to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/30 z-10 pointer-events-none"></div>
-
-      {/* Content */}
-      <div className="relative z-20 container mx-auto px-8 md:px-16 h-full flex flex-col justify-center pointer-events-none">
         
-        {/* Main Typography Area */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="max-w-4xl pt-20"
-        >
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-xs md:text-sm font-bold tracking-[0.3em] text-white/60 uppercase">Portfolio · 2026</span>
-          </div>
-
-          <h1 className="font-heading text-[10vw] md:text-[80px] lg:text-[100px] font-black leading-tight tracking-tighter text-white drop-shadow-2xl mb-8 pointer-events-auto">
-            KOUSHIK S
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm font-bold tracking-[0.2em] text-white/80 uppercase">
-            <span>Developer</span>
-            <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-white/50"></span>
-            <span>Designer</span>
-            <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-white/50"></span>
-            <span>GenAI Integration</span>
-          </div>
-        </motion.div>
-
-        {/* Scroll Indicator (Bottom Left) */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-12 left-8 md:left-16 flex flex-col items-center gap-4"
-        >
-          <span className="text-[10px] font-bold tracking-[0.3em] text-white/50 uppercase rotate-[-90deg] mb-8 origin-bottom">Scroll</span>
-          <div className="w-[1px] h-16 bg-white/20 relative overflow-hidden">
-            <motion.div 
-              className="absolute top-0 left-0 w-full h-1/2 bg-white"
-              animate={{ y: [0, 64, 0] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            />
-          </div>
-        </motion.div>
-
-        {/* Mute/Unmute Toggle (Bottom Right) */}
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1 }}
-          onClick={toggleMute}
-          className="absolute bottom-12 right-8 md:right-16 w-14 h-14 rounded-full border border-white/20 flex items-center justify-center bg-black/20 backdrop-blur-md hover:bg-white/10 hover:scale-110 transition-all cursor-pointer z-30 pointer-events-auto"
-          aria-label="Toggle Audio"
-        >
-          {isMuted ? <VolumeX size={20} className="text-white" /> : <Volume2 size={20} className="text-white" />}
-        </motion.button>
+        {/* Minimal Gradient - Only for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/40 via-transparent to-[#0a0a0f]/60" />
       </div>
+
+      {/* Content - Left Side with Transparent Background */}
+      <div className="relative z-10 container mx-auto px-6 lg:px-12">
+        <div className="max-w-2xl">
+          
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 backdrop-blur-md"
+          >
+            <span className="w-2 h-2 bg-cyan rounded-full animate-pulse" />
+            <span className="text-sm font-mono text-cyan">Available for Opportunities</span>
+          </motion.div>
+
+          {/* Main Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6 leading-tight"
+          >
+            <span className="gradient-text drop-shadow-[0_0_30px_rgba(0,212,255,0.5)]">KOUSHIK S</span>
+          </motion.h1>
+
+          {/* Typewriter Effect */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-3xl font-semibold mb-6 h-16 flex items-center"
+          >
+            <TypeAnimation
+              sequence={[
+                "Building AI-Powered Solutions",
+                2000,
+                "Creating Real-World Products",
+                2000,
+                "Innovating with Technology",
+                2000,
+              ]}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
+              className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
+            />
+          </motion.div>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-base md:text-lg text-gray-200 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          >
+            CSE Student | AI Developer | Creator of FASTPARK | Hackathon Builder
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="text-sm md:text-base text-gray-300 mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          >
+            Full Stack Developer • Prompt Engineer • Generative AI Specialist
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-wrap items-center gap-4 mb-8"
+          >
+            <Link
+              href="#projects"
+              className="group px-6 py-3 bg-gradient-to-r from-cyan to-blue-500 rounded-full font-semibold text-white hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all duration-300 flex items-center gap-2"
+            >
+              View Projects
+              <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+            </Link>
+            
+            <a
+              href="/assets/Koushik_S_Resume.docx"
+              download
+              className="px-6 py-3 glass-card backdrop-blur-md rounded-full font-semibold text-white hover:bg-white/20 transition-all duration-300 flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Download Resume
+            </a>
+            
+            <Link
+              href="#contact"
+              className="px-6 py-3 glass-card backdrop-blur-md rounded-full font-semibold text-white hover:bg-white/20 transition-all duration-300 flex items-center gap-2"
+            >
+              <Mail className="w-4 h-4" />
+              Contact Me
+            </Link>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            className="flex items-center gap-4"
+          >
+            <a
+              href="https://github.com/Koushik-5499/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 glass-card backdrop-blur-md rounded-full flex items-center justify-center hover:bg-cyan/20 hover:border-cyan/50 transition-all duration-300 group"
+            >
+              <svg className="w-5 h-5 text-gray-300 group-hover:text-cyan transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/koushik-s-22122a386/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 glass-card backdrop-blur-md rounded-full flex items-center justify-center hover:bg-cyan/20 hover:border-cyan/50 transition-all duration-300 group"
+            >
+              <svg className="w-5 h-5 text-gray-300 group-hover:text-cyan transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="w-6 h-10 border-2 border-cyan/50 rounded-full flex items-start justify-center p-2"
+        >
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-1 h-2 bg-cyan rounded-full"
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Audio Toggle Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1 }}
+        onClick={toggleMute}
+        className="absolute bottom-8 right-8 w-12 h-12 glass-card rounded-full flex items-center justify-center hover:bg-cyan/20 hover:border-cyan/50 transition-all duration-300 z-10 group"
+        aria-label="Toggle Audio"
+      >
+        {isMuted ? (
+          <VolumeX className="w-5 h-5 text-gray-400 group-hover:text-cyan transition-colors" />
+        ) : (
+          <Volume2 className="w-5 h-5 text-cyan" />
+        )}
+      </motion.button>
     </section>
   );
 }

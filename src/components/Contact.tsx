@@ -1,171 +1,75 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { Mail, Link, GitBranch, Send, Download } from "lucide-react";
-import { useState } from "react";
+import { Mail, Download, Send, MapPin } from "lucide-react";
 
 export default function Contact() {
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus("submitting");
-    setTimeout(() => {
-      setFormStatus("success");
-      setTimeout(() => setFormStatus("idle"), 3000);
-    }, 1500);
-  };
-
   return (
-    <section id="contact" className="py-32 relative border-t border-white/5">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
-
+    <section id="contact" className="py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan/5 to-transparent" />
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-mono text-sm mb-4 uppercase tracking-widest border border-primary/20">
-            Get In Touch
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6">
+            <Send className="w-4 h-4 text-cyan" />
+            <span className="text-sm font-mono text-cyan uppercase tracking-widest">Get In Touch</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Let&apos;s Build Something Amazing</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Have a project in mind? Let&apos;s collaborate and create something extraordinary.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+            <span className="gradient-text">Let&apos;s Build Together</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">Open to opportunities, collaborations, and innovative projects</p>
         </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          
-          {/* Contact Info */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
-            <div>
-              <h3 className="text-3xl font-heading font-bold text-white mb-4">Connect with me</h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <a href="mailto:koushik4680@gmail.com" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-white/5 hover:border-cyan/30 hover:bg-white/5 transition-all group">
-                <div className="w-14 h-14 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <Mail className="text-cyan" />
-                </div>
-                <div>
-                  <h4 className="text-white font-heading font-semibold mb-1 text-lg">Email</h4>
-                  <p className="text-gray-400 group-hover:text-cyan transition-colors">koushik4680@gmail.com</p>
-                </div>
-              </a>
-
-              <a href="https://linkedin.com/in/koushik-s-22122a386" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-white/5 hover:border-blue-500/30 hover:bg-white/5 transition-all group">
-                <div className="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <Link className="text-blue-500" />
-                </div>
-                <div>
-                  <h4 className="text-white font-heading font-semibold mb-1 text-lg">LinkedIn</h4>
-                  <p className="text-gray-400 group-hover:text-blue-400 transition-colors">koushik-s-22122a386</p>
-                </div>
-              </a>
-
-              <a href="https://github.com/Koushik-5499" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-white/5 hover:border-purple-500/30 hover:bg-white/5 transition-all group">
-                <div className="w-14 h-14 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <GitBranch className="text-purple-400" />
-                </div>
-                <div>
-                  <h4 className="text-white font-heading font-semibold mb-1 text-lg">GitHub</h4>
-                  <p className="text-gray-400 group-hover:text-purple-400 transition-colors">Koushik-5499</p>
-                </div>
-              </a>
-
-              {/* Download Resume Button */}
-              <a href="/assets/resume.pdf" download="Koushik_S_Resume.pdf" className="flex items-center gap-6 p-6 rounded-2xl glass-card border border-cyan/20 hover:border-cyan/50 hover:bg-cyan/5 hover:shadow-[0_0_30px_rgba(0,180,255,0.2)] transition-all group mt-8 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="w-14 h-14 rounded-xl bg-cyan/20 border border-cyan/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:-translate-y-1 transition-transform relative z-10">
-                  <Download className="text-cyan" />
-                </div>
-                <div className="relative z-10">
-                  <h4 className="text-white font-heading font-bold mb-1 text-lg">Download Resume</h4>
-                  <p className="text-gray-300 group-hover:text-white transition-colors">Grab a copy of my latest CV</p>
-                </div>
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <form onSubmit={handleSubmit} className="glass-card p-10 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-primary/30 transition-colors">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-cyan to-purple"></div>
-              
-              <div className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">Your Name</label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    required 
-                    placeholder="John Doe"
-                    className="w-full bg-black/20 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 transition-all"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    required 
-                    placeholder="john@example.com"
-                    className="w-full bg-black/20 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 transition-all"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                  <textarea 
-                    id="message" 
-                    required 
-                    placeholder="Tell me about your project..."
-                    rows={5}
-                    className="w-full bg-black/20 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/50 transition-all resize-none"
-                  ></textarea>
-                </div>
-                
-                <button 
-                  type="submit" 
-                  disabled={formStatus !== "idle"}
-                  className={`w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-white transition-all ${
-                    formStatus === "success" 
-                      ? "bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]" 
-                      : "bg-gradient-to-r from-primary to-indigo hover:shadow-[0_0_25px_rgba(0,180,255,0.4)] hover:-translate-y-1"
-                  }`}
-                >
-                  {formStatus === "idle" && (
-                    <>Send Message <Send size={18} /></>
-                  )}
-                  {formStatus === "submitting" && (
-                    <span className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                  )}
-                  {formStatus === "success" && "Message Sent! ✓"}
-                </button>
+        <div className="max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} className="glass-card p-12 rounded-3xl border-2 border-cyan/20 hover:border-cyan/40 transition-all duration-500 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="relative z-10">
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <motion.a href="mailto:koushik4680@gmail.com" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="flex items-start gap-4 p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 group/item">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan to-blue-500 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1 group-hover/item:text-cyan transition-colors">Email</h4>
+                    <p className="text-sm text-gray-400">koushik4680@gmail.com</p>
+                  </div>
+                </motion.a>
+                <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="flex items-start gap-4 p-6 rounded-2xl bg-white/5">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">Location</h4>
+                    <p className="text-sm text-gray-400">Coimbatore, India</p>
+                  </div>
+                </motion.div>
               </div>
-            </form>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-wrap items-center justify-center gap-4 mb-12">
+                <a href="https://www.linkedin.com/in/koushik-s-22122a386/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-3 glass-card rounded-full hover:bg-cyan/10 hover:border-cyan/30 transition-all duration-300 group/link">
+                  <svg className="w-5 h-5 text-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  <span className="font-semibold text-white group-hover/link:text-cyan transition-colors">LinkedIn</span>
+                </a>
+                <a href="https://github.com/Koushik-5499/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-3 glass-card rounded-full hover:bg-cyan/10 hover:border-cyan/30 transition-all duration-300 group/link">
+                  <svg className="w-5 h-5 text-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                  <span className="font-semibold text-white group-hover/link:text-cyan transition-colors">GitHub</span>
+                </a>
+                <a href="/assets/Koushik_S_Resume.docx" download className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-cyan to-blue-500 rounded-full font-semibold text-white hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all duration-300">
+                  <Download className="w-5 h-5" />
+                  Download Resume
+                </a>
+              </motion.div>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }} className="text-center">
+                <p className="text-gray-300 text-lg mb-2">Looking for an AI developer who ships products?</p>
+                <p className="text-cyan font-semibold text-xl">Let&apos;s connect and build something amazing!</p>
+              </motion.div>
+            </div>
           </motion.div>
-
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6, delay: 0.5 }} className="grid grid-cols-3 gap-4 mt-8">
+            {[{ label: "Response Time", value: "< 24h" }, { label: "Availability", value: "Open" }, { label: "Time Zone", value: "IST" }].map((stat, idx) => (
+              <div key={idx} className="glass-card p-4 rounded-xl text-center">
+                <p className="text-2xl font-bold font-heading gradient-text mb-1">{stat.value}</p>
+                <p className="text-xs text-gray-400">{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
