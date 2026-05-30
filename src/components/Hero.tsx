@@ -129,8 +129,8 @@ export default function Hero() {
       </div>
 
       {/* Content - Left Side */}
-      <div className="relative z-20 container mx-auto px-6 lg:px-12">
-        <div className="max-w-2xl pt-16 pb-24">
+      <div className="absolute z-20 top-0 bottom-0 left-0 flex items-center" style={{ paddingLeft: "48px" }}>
+        <div style={{ maxWidth: "500px", paddingTop: "72px" }}>
 
           {/* Badge */}
           <motion.div
