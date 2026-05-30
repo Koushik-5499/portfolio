@@ -113,7 +113,7 @@ export default function Hero() {
           playsInline
           muted={isMuted}
           onEnded={handleEnded}
-          className="absolute object-cover object-[35%_center] md:object-[left_center]"
+          className="absolute object-cover object-center md:object-[left_center]"
           style={{
             width: "110%",
             height: "110%",
