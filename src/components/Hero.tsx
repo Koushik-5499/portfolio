@@ -89,6 +89,13 @@ export default function Hero() {
     const next = !isMuted;
     video.muted = next;
     setIsMuted(next);
+    
+    // Play from the beginning when unmuting
+    if (!next) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      setHasEnded(false);
+    }
   };
 
   return (
