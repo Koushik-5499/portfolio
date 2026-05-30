@@ -96,8 +96,8 @@ export default function Hero() {
       id="hero"
       ref={sectionRef}
       onClick={handleSectionClick}
-      className="relative min-h-screen w-full overflow-hidden flex items-center"
-      style={{ cursor: hasEnded ? "pointer" : "default" }}
+      className="relative w-full overflow-hidden flex items-center justify-start"
+      style={{ minHeight: "100svh", cursor: hasEnded ? "pointer" : "default" }}
     >
       {/* Video Background — cropped to exclude watermark area */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -108,11 +108,11 @@ export default function Hero() {
           onEnded={handleEnded}
           className="absolute object-cover"
           style={{
-            width: "110%",
-            height: "110%",
-            top: "0%",
-            left: "0%",
-            objectPosition: "left center",
+            width: "120%",
+            height: "120%",
+            top: "-10%",
+            left: "-10%",
+            objectPosition: "center center",
           }}
         >
           <source src="/assets/presenter.mp4" type="video/mp4" />
@@ -129,8 +129,8 @@ export default function Hero() {
       </div>
 
       {/* Content - Left Side */}
-      <div className="relative z-20 container mx-auto px-6 lg:px-12">
-        <div className="max-w-2xl pt-16 pb-24">
+      <div className="relative z-20 w-full px-6 lg:px-16" style={{ paddingTop: "80px", paddingBottom: "80px" }}>
+        <div className="max-w-xl">
 
           {/* Badge */}
           <motion.div
