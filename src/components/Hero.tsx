@@ -113,13 +113,12 @@ export default function Hero() {
           playsInline
           muted={isMuted}
           onEnded={handleEnded}
-          className="absolute object-cover"
+          className="absolute object-cover object-[65%_center] md:object-[left_center]"
           style={{
             width: "110%",
             height: "110%",
             top: "0%",
             left: "0%",
-            objectPosition: "left center",
           }}
         >
           <source src="/assets/presenter.mp4" type="video/mp4" />
