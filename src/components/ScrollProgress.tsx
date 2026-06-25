@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 
 import { motion, useScroll } from "framer-motion";
@@ -13,19 +12,3 @@ export default function ScrollProgress() {
     />
   );
 }
-=======
-"use client";
-
-import { motion, useScroll } from "framer-motion";
-
-export default function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-
-  return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan via-blue-500 to-purple-500 origin-left z-[9999]"
-      style={{ scaleX: scrollYProgress }}
-    />
-  );
-}
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a

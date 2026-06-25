@@ -11,10 +11,7 @@ const navLinks = [
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
   { name: "Achievements", href: "#achievements" },
-<<<<<<< HEAD
   { name: "Certifications", href: "#certifications" },
-=======
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
   { name: "Contact", href: "#contact" },
 ];
 

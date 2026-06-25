@@ -168,19 +168,11 @@ export default function Hero() {
           >
             <TypeAnimation
               sequence={[
-<<<<<<< HEAD
                 "Building Real-world Web Applications",
                 2000,
                 "Full Stack Development",
                 2000,
                 "AI & Software Engineering",
-=======
-                "Building AI-Powered Solutions",
-                2000,
-                "Creating Real-World Products",
-                2000,
-                "Innovating with Technology",
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
                 2000,
               ]}
               wrapper="span"
@@ -197,11 +189,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-sm md:text-base text-gray-200 mb-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
-<<<<<<< HEAD
             Computer Science Engineering Student at Rathinam Technical Campus
-=======
-            CSE Student | AI Developer | Creator of FASTPARK | Hackathon Builder
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
           </motion.p>
 
           <motion.p
@@ -210,11 +198,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-xs md:text-sm text-gray-400 mb-7 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
-<<<<<<< HEAD
             Full Stack Developer • AI Enthusiast • Hackathon Innovator
-=======
-            Full Stack Developer • Prompt Engineer • Generative AI Specialist
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
           </motion.p>
 
           {/* CTA Buttons */}
@@ -234,11 +218,7 @@ export default function Hero() {
             </Link>
 
             <a
-<<<<<<< HEAD
               href="/assets/Koushik_Resume.pdf"
-=======
-              href="/assets/Koushik_S_Resume.docx"
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
               download
               onClick={(e) => e.stopPropagation()}
               className="px-5 py-2.5 glass-card backdrop-blur-md rounded-full font-semibold text-white text-sm hover:bg-white/20 transition-all duration-300 flex items-center gap-2"

@@ -5,7 +5,6 @@ import { Code2, Database, Cpu, Sparkles, Wrench } from "lucide-react";
 
 const skillCategories = [
   {
-<<<<<<< HEAD
     title: "Languages",
     icon: Code2,
     gradient: "from-cyan to-blue-500",
@@ -58,57 +57,6 @@ const skillCategories = [
       { name: "Razorpay", level: 85 },
       { name: "QR Code Systems", level: 90 },
       { name: "Google Maps API", level: 80 },
-=======
-    title: "Frontend",
-    icon: Code2,
-    gradient: "from-cyan to-blue-500",
-    skills: [
-      { name: "HTML", level: 95 },
-      { name: "CSS", level: 90 },
-      { name: "JavaScript", level: 90 },
-      { name: "React", level: 85 },
-      { name: "Next.js", level: 85 },
-    ],
-  },
-  {
-    title: "Backend",
-    icon: Database,
-    gradient: "from-blue-500 to-purple-500",
-    skills: [
-      { name: "Firebase", level: 90 },
-      { name: "Node.js", level: 80 },
-    ],
-  },
-  {
-    title: "Programming",
-    icon: Cpu,
-    gradient: "from-purple-500 to-pink-500",
-    skills: [
-      { name: "Java", level: 85 },
-      { name: "Python", level: 80 },
-      { name: "C", level: 75 },
-    ],
-  },
-  {
-    title: "AI & ML",
-    icon: Sparkles,
-    gradient: "from-pink-500 to-cyan",
-    skills: [
-      { name: "Prompt Engineering", level: 95 },
-      { name: "Generative AI", level: 90 },
-      { name: "AI Agents", level: 85 },
-    ],
-  },
-  {
-    title: "Tools",
-    icon: Wrench,
-    gradient: "from-cyan to-purple-500",
-    skills: [
-      { name: "GitHub", level: 90 },
-      { name: "Vercel", level: 85 },
-      { name: "Firebase", level: 90 },
-      { name: "Power BI", level: 75 },
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
     ],
   },
 ];

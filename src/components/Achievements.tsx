@@ -1,11 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-<<<<<<< HEAD
 import { Award, Trophy, Rocket, Zap, Code, Brain, ExternalLink, ShieldCheck } from "lucide-react";
-=======
-import { Award, Trophy, Rocket, Zap, Code, Brain } from "lucide-react";
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
 import CountUp from "react-countup";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
@@ -21,7 +17,6 @@ const metrics = [
 
 const achievements = [
   {
-<<<<<<< HEAD
     title: "AB-PMJAY Hackathon",
     description: "Built ClaimIQ for clinical document classification using LLM + keyword hybrid pipeline (IISc Bengaluru).",
     year: "2026",
@@ -60,27 +55,6 @@ const certifications = [
   { title: "Udemy Professional Courses", issuer: "Udemy" }
 ];
 
-=======
-    title: "PromptWars Challenge",
-    description: "Built AI Election Assistant using advanced prompt engineering",
-    year: "2024",
-    category: "Generative AI",
-  },
-  {
-    title: "AB PM-JAY Hackathon",
-    description: "Developed healthcare solution for government initiative",
-    year: "2024",
-    category: "Healthcare Tech",
-  },
-  {
-    title: "AMD Developer Hackathon",
-    description: "Created innovative solution leveraging AMD technologies",
-    year: "2024",
-    category: "Hardware Innovation",
-  },
-];
-
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
 export default function Achievements() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -161,11 +135,7 @@ export default function Achievements() {
           </h3>
         </motion.div>
 
-<<<<<<< HEAD
         <div className="grid md:grid-cols-2 gap-6">
-=======
-        <div className="grid md:grid-cols-3 gap-6">
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
           {achievements.map((achievement, idx) => (
             <motion.div
               key={idx}
@@ -173,7 +143,6 @@ export default function Achievements() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-<<<<<<< HEAD
               className="glass-card p-8 rounded-2xl hover:border-cyan/30 transition-all duration-300 group relative overflow-hidden flex flex-col h-full"
             >
               {/* Card Header (Category + Year) */}
@@ -184,18 +153,6 @@ export default function Achievements() {
                 <div className="px-3 py-1 rounded-full bg-cyan/10 border border-cyan/20 text-cyan text-xs font-mono shrink-0">
                   {achievement.year}
                 </div>
-=======
-              className="glass-card p-8 rounded-2xl hover:border-cyan/30 transition-all duration-300 group relative overflow-hidden"
-            >
-              {/* Year Badge */}
-              <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-cyan/10 border border-cyan/20 text-cyan text-xs font-mono">
-                {achievement.year}
-              </div>
-              
-              {/* Category */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-4">
-                {achievement.category}
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
               </div>
               
               <h4 className="text-xl font-bold font-heading text-white mb-3 group-hover:text-cyan transition-colors">
@@ -212,7 +169,6 @@ export default function Achievements() {
           ))}
         </div>
 
-<<<<<<< HEAD
         {/* Certifications Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -280,8 +236,6 @@ export default function Achievements() {
           </div>
         </div>
 
-=======
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
       </div>
     </section>
   );

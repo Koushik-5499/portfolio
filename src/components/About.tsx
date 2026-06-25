@@ -47,7 +47,6 @@ export default function About() {
               </h3>
               <div className="space-y-4 text-gray-300 leading-relaxed">
                 <p>
-<<<<<<< HEAD
                   I'm a first-year Computer Science Engineering student at Rathinam Technical Campus with a passion for Full Stack Development and AI. My journey in tech is driven by a commitment to problem-solving and building robust, scalable systems that make a real-world impact.
                 </p>
                 <p>
@@ -55,15 +54,6 @@ export default function About() {
                 </p>
                 <p>
                   I thrive in hackathons and competitive programming, always eager for continuous learning. I believe in a pragmatic engineering approach: <span className="text-cyan font-semibold">build fast, iterate quickly, and write clean, maintainable code</span>.
-=======
-                  I'm a Computer Science Engineering student with a passion for building AI-powered solutions that solve real-world problems. My journey in tech is driven by curiosity, innovation, and a commitment to creating products that make a difference.
-                </p>
-                <p>
-                  As the creator of <span className="text-cyan font-semibold">FASTPARK</span>, I've experienced firsthand the power of combining AI, automation, and user-centric design to revolutionize traditional systems. I specialize in Full Stack Development, Generative AI, and Prompt Engineering.
-                </p>
-                <p>
-                  I thrive in hackathons, love experimenting with cutting-edge technologies, and believe in the startup mindset: <span className="text-cyan font-semibold">build fast, iterate faster, and ship products that matter</span>.
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
                 </p>
               </div>
             </div>
@@ -84,11 +74,7 @@ export default function About() {
                 <div>
                   <h4 className="text-xl font-bold font-heading mb-3">Mission</h4>
                   <p className="text-gray-300 leading-relaxed">
-<<<<<<< HEAD
                     To leverage software engineering and modern web technologies to create robust solutions that bridge the gap between complex real-world problems and efficient, user-friendly products.
-=======
-                    To leverage AI and modern technologies to create innovative solutions that bridge the gap between complex problems and elegant, user-friendly products.
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
                   </p>
                 </div>
               </div>
@@ -154,17 +140,10 @@ export default function About() {
               
               <div className="space-y-4">
                 {[
-<<<<<<< HEAD
                   { title: "Full Stack Development", desc: "Creating end-to-end scalable web applications" },
                   { title: "Software Engineering", desc: "Writing clean, maintainable, and efficient code" },
                   { title: "AI Integration", desc: "Building intelligent systems with Generative AI" },
                   { title: "Problem Solving", desc: "Tackling complex challenges through technology" },
-=======
-                  { title: "AI Development", desc: "Building intelligent systems with Generative AI" },
-                  { title: "Full Stack Development", desc: "Creating end-to-end web applications" },
-                  { title: "Prompt Engineering", desc: "Crafting effective AI interactions" },
-                  { title: "Product Building", desc: "Shipping real products that solve problems" },
->>>>>>> 1ca838bdb24854d7a05a60657221b4d8bdf56e1a
                 ].map((item, idx) => (
                   <motion.div
                     key={idx}
